@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parsing</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+        
+</head>
+
+<body>
+  <form action="" method="POST">
+    {% csrf_token %}
+    <input type="email" placeholder="Введите ваш email!" name='email'>
+    <button>Подписаться</button>
+    {% for message in messages %}
+      <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+  </form>
+    {% for job in jobs %}
+    <div class="card text-center">
+        <div class="card-header">
+          {{job.vote}} Голосов | {{ job.bookmarks }} Избранных
+        </div>
+        <div class="card-body">
+          <h5 class="card-title">{{ job.title }}</h5>
+          <p class="card-text">{{ job.body |truncatechars:40  }}</p>
+          <a href="{{ job.url }}" class="btn btn-primary">Перейти на новость</a>
+        </div>
+        <div class="card-footer text-muted">
+          {{ job.time }}
+        </div>
+      </div>
+      <br/>
+    {% endfor %}
+    
+            
+</body>
+
+</html>
